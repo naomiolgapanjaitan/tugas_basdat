@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Sistem Informasi Beasiswa | Log in</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="/">
+  <!-- Font Awesome -->
+  <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet"  href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" type="text/css" href="/dist/css/adminlte.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <a href="../../index2.html"><b>SIMBION</b></a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">Sign in to start your session</p>
+
+      <form action="/login" method="post">
+        <div class="form-group has-feedback">
+            <span class="fa fa-envelope form-control-feedback"></span>
+          <input type="text" class="form-control" placeholder="Username" name="username">
+         </div>
+        <div class="form-group has-feedback">
+          <span class="fa fa-lock form-control-feedback"></span>
+       
+          <input type="password" class="form-control" placeholder="Password" name="password">
+         </div>
+        <div class="row">
+        
+          <!-- /.col -->
+          <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+
+      <div class="social-auth-links text-center mb-3">
+      
+      </div>
+      <!-- /.social-auth-links -->
+
+        <a href="#" class="text-center">Register <br> </a>
+        <a href="/register/mahasiswa" class="text-center">Mahasiswa | </a>
+        <a href="/register/donatur" class="text-center">Individual Donatur | </a>
+        <a href="register_yayasan.html" class="text-center">Yayasan | </a>
+		<a href="home_admin.html" class="text-center">Admin </a>
+      </p>
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- iCheck -->
+<script src="/plugins/iCheck/icheck.min.js"></script>
+<script>
+</script>
+</body>
+</html>
