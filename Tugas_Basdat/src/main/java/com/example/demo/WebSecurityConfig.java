@@ -20,6 +20,11 @@ protected void configure(HttpSecurity http) throws Exception {
 	http
 	.csrf().disable()
 	.authorizeRequests()
+	.antMatchers("/register/mahasiswa").permitAll()
+	.antMatchers("/register/donatur").permitAll()
+	.antMatchers("/register/mahasiswa/submit").permitAll()
+	.antMatchers("/register/individuDonatur/submit").permitAll()
+	
 	.anyRequest().authenticated()
 	.and()
 	.formLogin()		

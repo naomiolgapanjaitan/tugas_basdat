@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>SIMBION | Daftar Beasiswa</title>
+  <title>SIMBION | Daftar Pengumuman</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -12,9 +12,9 @@
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- DataTables -->
-  <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="/plugins/datatables/dataTables.bootstrap4.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="/dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -24,16 +24,14 @@
   <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
-      </li>
-      
+  
 		</ul>
-      
-	
+
+    
+
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      
+     
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -49,7 +47,7 @@
       <span class="brand-text font-weight-light">SIMBION</span>
     </a>
 
-        <!-- Sidebar -->
+           <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -62,7 +60,7 @@
       </div>
 
       <!-- Sidebar Menu -->
-      <nav class="mt-2">
+   <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
@@ -147,44 +145,16 @@
     </section>
 
     <!-- Main content -->
-    <section class="content">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title"><center>Daftar Pengumuman Beasiswa</center></h3>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>Tanggal</th>
-                  <th>Judul</th>
-                  <th>Pembuat</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="skema,iterationStatus:${listPengumumans}">
-                                          <td th:text="${skema.tanggal}"></td>
-                                              <td th:text="${skema.judul}"></td>
-           <td th:text="${skema.username}"></td>
-         
-           </tr>
-                </tbody>
-              </table>
-            </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
+     <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+	<center> <h4> Anda Telah Berhasil Mendaftarkan Skema Beasiswa Baru 
+	</h4>
+	</center>
+</h3>
+</div>
+</div>
 
-          
-          <!-- /.card -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-    </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -205,20 +175,20 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="plugins/jquery/jquery.min.js"></script>
+<script src="/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- DataTables -->
-<script src="plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="plugins/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables/dataTables.bootstrap4.min.js"></script>
 <!-- SlimScroll -->
-<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
-<script src="plugins/fastclick/fastclick.js"></script>
+<script src="/plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
+<script src="/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
+<script src="/dist/js/demo.js"></script>
 <!-- page script -->
 <script>
   $(function () {

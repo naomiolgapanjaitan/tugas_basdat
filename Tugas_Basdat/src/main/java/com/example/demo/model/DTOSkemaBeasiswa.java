@@ -18,6 +18,6 @@ public class DTOSkemaBeasiswa {
 	private String nama;
 	private Date waktu_tutup;
 	private String status;
-	private int jumlah_daftar;
+	private int jumlah_pendaftar;
 	
 }

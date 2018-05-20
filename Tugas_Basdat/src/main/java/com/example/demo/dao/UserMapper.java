@@ -29,9 +29,9 @@ public interface UserMapper {
     @Insert( "insert into pengguna (username,password) values (#{username},#{password})")
     void addpenggunaDon (DonaturModel mhs);
     @Insert("INSERT INTO donatur (nomer_identitas, email, nama , npwp,no_telp, alamat,username)"
-    		+"VALUES (#{no_identitas}, #{email}, #{nama}, #{npwp},#{no_telp}, #{alamat}, #{username})")
+    		+"VALUES (#{nomer_identitas}, #{email}, #{nama}, #{npwp},#{no_telp}, #{alamat_tinggal}, #{username})")
     void addDonatur (DonaturModel donat);
-    @Insert( "insert into pengguna (nik,nomor_identitas_donor) values (#{nik},#{no_identitas})")
+    @Insert( "insert into individual_donor (nik,nomer_identitas_donatur) values (#{nik},#{nomer_identitas})")
     void addIndividualDonor (DonaturModel mhs);
    
 }

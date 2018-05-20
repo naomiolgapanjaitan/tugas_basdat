@@ -25,6 +25,7 @@ import com.example.demo.dao.UserMapper;
 import com.example.demo.model.DTOAddSkema;
 import com.example.demo.model.DTOAddSkemaAktif;
 import com.example.demo.model.DTOAddSkemaAktifSubmit;
+import com.example.demo.model.DTOMahasiswaModel;
 import com.example.demo.model.DTOPendaftaran;
 import com.example.demo.model.DTOSkemaBeasiswa;
 import com.example.demo.model.DonaturModel;
@@ -32,6 +33,7 @@ import com.example.demo.model.MahasiswaModel;
 import com.example.demo.model.PendaftaranModel;
 import com.example.demo.model.PenggunaModel;
 import com.example.demo.model.PengumumanModel;
+import com.example.demo.model.RiwayatAkademik;
 import com.example.demo.model.SkemaBeasiswa;
 import com.example.demo.model.SkemaBeasiswaAktif;
 import com.example.demo.model.SyaratModel;
@@ -56,10 +58,8 @@ public class PageController {
 		String name = auth.getName();
 	    if (!(auth instanceof AnonymousAuthenticationToken))
 	    {
-	    	System.out.println("masuk mahasiswa blabla");
-	        
+	    	
 			if(userDAO.selectDonaturByUsername(name)!=null) {
-				System.out.println("masuk mahasiswa uye");
 			       
 	        return "redirect:/homeDonat";
 			}
@@ -90,10 +90,8 @@ public class PageController {
 		List<DTOSkemaBeasiswa> listRes = new ArrayList<DTOSkemaBeasiswa>() ;
 		
 		for(SkemaBeasiswa lst:listSkema) {
-			System.out.println("1"+listSkema.size());
 			List<SkemaBeasiswaAktif> listAktv = beaDAO.selectAllByKodeSkema(lst.getKode());
 			for(SkemaBeasiswaAktif lst2:listAktv) {
-				System.out.println("2"+listAktv.size());
 				
 			DTOSkemaBeasiswa a = new DTOSkemaBeasiswa(nomer,lst.getKode(),lst.getNama(),lst2.getTgl_tutup_pendaftaran(),lst2.getStatus(),lst2.getJumlah_pendaftar());
 			listRes.add(a);
@@ -108,10 +106,8 @@ public class PageController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String name = auth.getName();
 		String nid = "";
-		System.out.println("nama"+name);
 		DonaturModel coba = userDAO.selectDonaturByUsername(name);
 		String nama = userDAO.selectDonaturByUsername(name).getNomer_identitas();
-		System.out.println("nama"+nama);
 		
 		List<SkemaBeasiswa> listSkema = beaDAO.selectAll();
 		int nomer=1;
@@ -182,7 +178,6 @@ public class PageController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String name = auth.getName();
 		String nid = "";
-		System.out.println("nama"+name);
 	
 			String nama = userDAO.selectDonaturByUsername(name).getNomer_identitas();
 			
@@ -191,21 +186,20 @@ public class PageController {
 		SyaratModel syarat = new SyaratModel (model.getKode(),model.getSyarat());
 		beaDAO.addSkemaBeasiswa(skema);
 		beaDAO.addSyarat(syarat);
-       return "/homeDonat";
+       return "berhasildaftarskema";
 }
 	@RequestMapping(value="/tambahskemaaktif/submit", method =RequestMethod.POST)
 	 public String tambahskemaaktifsubmit (DTOAddSkemaAktif model ) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String name = auth.getName();
 		String nid = "";
-		System.out.println("nama"+name);
 	
 			String nama = userDAO.selectDonaturByUsername(name).getNomer_identitas();
 			String status = "Aktif";
 			String periode_penerimaan = "Genap 2016/2017";
 			DTOAddSkemaAktifSubmit addskema = new DTOAddSkemaAktifSubmit(model.getKode_skema_beasiswa(),model.getNo_urut(),model.getTgl_mulai_pendaftaran(),model.getTgl_tutup_pendaftaran(),periode_penerimaan, status);
 			beaDAO.addSkemaBeasiswaAktif(addskema);
-			return "/homeDonat";
+			return "berhasildaftarskemaaktif";
 }
 
 	@RequestMapping("/register/mahasiswa")
@@ -217,31 +211,54 @@ public class PageController {
 		return "register_donatur";
 	}
 	@RequestMapping(value="/register/mahasiswa/submit", method =RequestMethod.POST)
-	 public String regisMhsSubmit (MahasiswaModel model , PenggunaModel model2) {
-		  
+	 public String regisMhsSubmit (DTOMahasiswaModel model , PenggunaModel model2) {
+		
     	MahasiswaModel mhs = new MahasiswaModel (model.getNpm(),model.getEmail(),model.getNama(),model.getNo_telp(),model.getAlamat_tinggal(),model.getAlamat_domisili(),model.getNama_bank(),model.getNo_rekening(),model.getNama_pemilik(),model.getUsername(),model.getPassword());
-      
+    	char semester='0';
+    	char tahun_ajaran='0';	
+    	 int jumlah_sks=0;
+    	 String lampiran="";
+    	RiwayatAkademik rwt = new RiwayatAkademik(model.getNpm(),semester,tahun_ajaran,jumlah_sks,model.getIps(),lampiran);
         userDAO.addpengguna(mhs);
         userDAO.addStudent(mhs);
+        beaDAO.addRiwayatPendidikan(rwt);
         return "login_all";
 }
 	@RequestMapping(value="/register/individuDonatur/submit", method =RequestMethod.POST)
 	 public String regisIndiDonaturSubmit (DonaturModel model) {
+		System.out.println("TEST");
 	DonaturModel donat = new DonaturModel (model.getNik(),model.getNomer_identitas(),model.getEmail(),model.getNama(),model.getNo_telp(),model.getAlamat_tinggal(),model.getNpwp(),model.getUsername(),model.getPassword(),model.getNo_sk_yayasan());
      
        userDAO.addpenggunaDon(donat);
+    
        userDAO.addDonatur(donat);
+   	System.out.println("TEST");
+	
        userDAO.addIndividualDonor(donat);
+   	System.out.println("TEST");
+	
        return "login_all";
 }
 
-	 @RequestMapping("/lihatbeasiswa/{kode}")
-	 public String lihatbeasiswadetail (Model model, @PathVariable(value = "kode") int kode){
+	 @RequestMapping("/lihatbeasiswa/{kode}/{no}")
+	 public String lihatbeasiswadetail (Model model, @PathVariable(value = "kode") int kode, @PathVariable(value = "no") int no){
 	SkemaBeasiswa skema = beaDAO.selectAllByKode(kode);
+	
 	List<SyaratModel> syarat = beaDAO.selectAllSyaratByKode(kode);
+	model.addAttribute("no_urut",no);
 	model.addAttribute("skema", skema);
 	model.addAttribute("syarat", syarat);
 		 return "detail_beasiswamhs";
+	 }
+	 @RequestMapping("/lihatbeasiswaDonat/{kode}/{no}")
+	 public String lihatbeasiswadetailDonat (Model model, @PathVariable(value = "kode") int kode, @PathVariable(value = "no") int no){
+	SkemaBeasiswa skema = beaDAO.selectAllByKode(kode);
+	
+	List<SyaratModel> syarat = beaDAO.selectAllSyaratByKode(kode);
+	model.addAttribute("no_urut",no);
+	model.addAttribute("skema", skema);
+	model.addAttribute("syarat", syarat);
+		 return "detail_beasiswa_donatur";
 	 }
 	 @RequestMapping("/lihatBeasiswaAndaDonat")
 		public String lihatBeaAndaDonat(Model model, SkemaBeasiswa skemabea, SkemaBeasiswaAktif skemaaktif ) {
@@ -274,7 +291,7 @@ public class PageController {
 		int i =1;
 		for(PendaftaranModel listpdf : pdf) {
 			String nama = userDAO.selectMahasiswaByNpm(listpdf.getNpm()).getNama();
-			DTOPendaftaran a = new DTOPendaftaran(i,nama,listpdf.getNpm(),listpdf.getWaktu_daftar(),listpdf.getStatus_terima());
+			DTOPendaftaran a = new DTOPendaftaran(listpdf.getNo_urut(),listpdf.getKode_skema_beasiswa(),nama,listpdf.getNpm(),listpdf.getWaktu_daftar(),listpdf.getStatus_terima(),listpdf.getStatus_daftar());
 			listRes.add(a);
 			i++;
 		}
@@ -286,15 +303,45 @@ public class PageController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String name = auth.getName();
 		String nid = "";
-		System.out.println("nama"+name);
-	
 			String npm = userDAO.selectMahasiswaByUsername(name).getNpm();
 			String status_daftar = "Dibuka";
 			String status_terima ="";
 			String periode_penerimaan = "Genap 2016/2017";
 			 Timestamp waktu_daftar = new Timestamp(System.currentTimeMillis());
 		 	PendaftaranModel dft = new PendaftaranModel(model.getNo_urut(),model.getKode_skema_beasiswa(),npm,waktu_daftar, status_daftar,status_terima);
-			return "/homeDonat";
+			beaDAO.addPendaftaran(dft);
+		 	return "berhasildaftarbeasiswa";
 }
-
+	 @RequestMapping("/diterima/{kode_skema_beasiswa}/{no_urut}/{npm}")
+		public String diterima(Model model,@PathVariable(value = "kode_skema_beasiswa") int kode,@PathVariable(value = "no_urut") int no_urut,@PathVariable(value = "npm") String npm) {
+		 
+		 beaDAO.addTerima(kode, no_urut, npm);
+	 List<DTOPendaftaran> listRes = new ArrayList<DTOPendaftaran>() ;
+	 List<PendaftaranModel> pdf = beaDAO.selectPendaftaranByKodeSkemaNo(kode, no_urut);
+	 	int i =1;
+	 	for(PendaftaranModel listpdf : pdf) {
+String nama = userDAO.selectMahasiswaByNpm(listpdf.getNpm()).getNama();
+DTOPendaftaran a = new DTOPendaftaran(listpdf.getNo_urut(),listpdf.getKode_skema_beasiswa(),nama,listpdf.getNpm(),listpdf.getWaktu_daftar(),listpdf.getStatus_terima(),listpdf.getStatus_daftar());
+listRes.add(a);
+i++;
+}
+model.addAttribute("listRes", listRes);
+		 return "redirect:/penerimaanDonat/{kode_skema_beasiswa}/{no_urut}";
+		}
+	 @RequestMapping("/ditolak/{kode_skema_beasiswa}/{no_urut}/{npm}")
+		public String ditolak(Model model,@PathVariable(value = "kode_skema_beasiswa") int kode,@PathVariable(value = "no_urut") int no_urut,@PathVariable(value = "npm") String npm) {
+		 
+		 beaDAO.addTolak(kode, no_urut, npm);
+	 List<DTOPendaftaran> listRes = new ArrayList<DTOPendaftaran>() ;
+	 List<PendaftaranModel> pdf = beaDAO.selectPendaftaranByKodeSkemaNo(kode, no_urut);
+	 	int i =1;
+	 	for(PendaftaranModel listpdf : pdf) {
+String nama = userDAO.selectMahasiswaByNpm(listpdf.getNpm()).getNama();
+DTOPendaftaran a = new DTOPendaftaran(listpdf.getNo_urut(),listpdf.getKode_skema_beasiswa(),nama,listpdf.getNpm(),listpdf.getWaktu_daftar(),listpdf.getStatus_terima(),listpdf.getStatus_daftar());
+listRes.add(a);
+i++;
+}
+model.addAttribute("listRes", listRes);
+		 return "redirect:/penerimaanDonat/{kode_skema_beasiswa}/{no_urut}";
+		}
 }

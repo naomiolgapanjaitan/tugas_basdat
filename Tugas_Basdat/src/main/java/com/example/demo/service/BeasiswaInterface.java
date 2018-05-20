@@ -16,6 +16,8 @@ public interface BeasiswaInterface {
 	void addSyarat(SyaratModel syarat);
 	void addSkemaBeasiswaAktif(DTOAddSkemaAktifSubmit skemaBeaAktif);
 	void addPendaftaran(PendaftaranModel pendaftaran);
+	void addTerima(int kode, int no , String npm);
+	void addTolak(int kode, int no , String npm);
 	
 	List<String> selectAllKode();
 	List<SkemaBeasiswa> selectAllByDonatur(String nomer_identitas_donatur);

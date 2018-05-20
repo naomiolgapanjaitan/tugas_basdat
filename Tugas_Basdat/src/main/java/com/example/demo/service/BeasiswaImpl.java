@@ -13,6 +13,7 @@ import com.example.demo.model.MahasiswaModel;
 import com.example.demo.model.PendaftaranModel;
 import com.example.demo.model.PenggunaModel;
 import com.example.demo.model.PengumumanModel;
+import com.example.demo.model.RiwayatAkademik;
 import com.example.demo.model.SkemaBeasiswa;
 import com.example.demo.model.SkemaBeasiswaAktif;
 import com.example.demo.model.SyaratModel;
@@ -77,12 +78,23 @@ public class BeasiswaImpl implements BeasiswaInterface {
 			 beaDAO.addPendaftaran(pendaftaran);
 	}
 	@Override
+	public void addTerima(int kode, int no , String npm) {
+			 beaDAO.addTerima(kode,no,npm);
+	}
+	@Override
+	public void addTolak(int kode, int no , String npm) {
+			 beaDAO.addTolak(kode,no,npm);
+	}
+	@Override
 	public List<SyaratModel> selectAllSyaratByKode(int kode) {
 		List<SyaratModel> selectAllPengumuman = beaDAO.selectAllSyaratByKode(kode);
 		return selectAllPengumuman;
 	}
 	public void addSyarat(SyaratModel syarat) {
 		 beaDAO.addSyarat(syarat);
+	}
+	public void addRiwayatAkademik(RiwayatAkademik riwayat) {
+		 beaDAO.addRiwayatPendidikan(riwayat);;
 }
 
 }

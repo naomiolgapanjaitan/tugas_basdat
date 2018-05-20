@@ -10,7 +10,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class IndividualDonorModel {
-	private String nomer_identitas;
-	private String nik;
-	}
+public class RiwayatAkademik {
+	private String npm;
+	private char semester;
+	private char tahun_ajaran;	
+	private int jumlah_sks;
+	private Double  ips;
+	private String lampiran;
+		}

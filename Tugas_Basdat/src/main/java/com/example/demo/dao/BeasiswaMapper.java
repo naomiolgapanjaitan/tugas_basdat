@@ -13,6 +13,7 @@ import com.example.demo.model.MahasiswaModel;
 import com.example.demo.model.PendaftaranModel;
 import com.example.demo.model.PenggunaModel;
 import com.example.demo.model.PengumumanModel;
+import com.example.demo.model.RiwayatAkademik;
 import com.example.demo.model.SkemaBeasiswa;
 import com.example.demo.model.SkemaBeasiswaAktif;
 import com.example.demo.model.SyaratModel;
@@ -53,7 +54,14 @@ public interface BeasiswaMapper {
     void addSkemaBeasiswaAktif (DTOAddSkemaAktifSubmit skemaaktif);
     
     @Insert("insert into pendaftaran (no_urut,kode_skema_beasiswa,npm,waktu_daftar,status_daftar,status_terima)"
-    		+ "values (#{status_terima},#{kode_skema_beasiswa},#{npm},"
+    		+ "values (#{no_urut},#{kode_skema_beasiswa},#{npm},"
     		+ "#{waktu_daftar},#{status_daftar},#{status_terima})")
     void addPendaftaran(PendaftaranModel pendaftaran);
+    @Insert("update pendaftaran SET status_terima='Aktif' where no_urut=#{no_urut} and kode_skema_beasiswa=#{kode_skema_beasiswa} and npm=#{npm}" )
+    void addTerima(@Param("kode_skema_beasiswa") int kode_skema_beasiswa, @Param("no_urut") int no_urut,@Param("npm") String npm);
+    @Insert("update pendaftaran SET status_terima='Tidak Aktif' where no_urut=#{no_urut} and kode_skema_beasiswa=#{kode_skema_beasiswa} and npm=#{npm}" )
+    void addTolak(@Param("kode_skema_beasiswa") int kode_skema_beasiswa, @Param("no_urut") int no_urut,@Param("npm") String npm);
+    @Insert ("insert into riwayat_akademik (npm,semester,tahun_ajaran,jumlah_sks,ips,lampiran)"
+    		+ "values (#{npm},#{semester},#{tahun_ajaran},#{jumlah_sks},#{ips},#{lampiran})")
+    void addRiwayatPendidikan(RiwayatAkademik riwayat);
 }
