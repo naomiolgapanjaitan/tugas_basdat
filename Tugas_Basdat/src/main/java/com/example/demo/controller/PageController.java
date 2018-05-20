@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import static org.mockito.Mockito.RETURNS_SMART_NULLS;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
